@@ -37,18 +37,18 @@ class MenuTableViewCell: UITableViewCell {
             foodImageView.widthAnchor.constraint(equalToConstant: 80),
             foodImageView.heightAnchor.constraint(equalToConstant: 80),
             
-            foodNameLabel.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor, constant: 10),
+            foodNameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 25),
             foodNameLabel.leadingAnchor.constraint(equalTo: foodImageView.trailingAnchor, constant: 10),
-            foodNameLabel.heightAnchor.constraint(equalToConstant: 30),
-            foodNameLabel.widthAnchor.constraint(equalToConstant: 110),
+            foodNameLabel.heightAnchor.constraint(equalToConstant: 25),
+            foodNameLabel.widthAnchor.constraint(equalToConstant: 120),
             
-            foodPriceLabel.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor, constant: -10),
+            foodPriceLabel.topAnchor.constraint(equalTo: foodNameLabel.bottomAnchor, constant: 0),
             foodPriceLabel.leadingAnchor.constraint(equalTo: foodImageView.trailingAnchor, constant: 10),
-            foodPriceLabel.heightAnchor.constraint(equalToConstant: 30),
+            foodPriceLabel.heightAnchor.constraint(equalToConstant: 25),
             foodPriceLabel.widthAnchor.constraint(equalToConstant: 100),
             
             foodCountLabel.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor),
-            foodCountLabel.leadingAnchor.constraint(equalTo: foodNameLabel.trailingAnchor, constant: 20),
+            foodCountLabel.leadingAnchor.constraint(equalTo: foodNameLabel.trailingAnchor, constant: 5),
             foodCountLabel.widthAnchor.constraint(equalToConstant: 30),
             
             stepper.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor),
@@ -56,9 +56,9 @@ class MenuTableViewCell: UITableViewCell {
         ])
         
         foodImageView.contentMode = .scaleAspectFit
-        foodNameLabel.font = UIFont.systemFont(ofSize: 18)
-        foodPriceLabel.font = UIFont.systemFont(ofSize: 16)
-        foodCountLabel.font = UIFont.systemFont(ofSize: 18)
+        foodNameLabel.font = UIFont.systemFont(ofSize: 16.5)
+        foodPriceLabel.font = UIFont.systemFont(ofSize: 14)
+        foodCountLabel.font = UIFont.systemFont(ofSize: 16.5)
         foodCountLabel.textAlignment = .center
         foodCountLabel.text = "0개"
         
