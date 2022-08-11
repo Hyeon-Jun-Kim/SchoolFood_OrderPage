@@ -16,6 +16,7 @@
 		CE067DE328A4957900184E57 /* SchoolFood_OrderPageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE067DE228A4957900184E57 /* SchoolFood_OrderPageTests.swift */; };
 		CE067DED28A4957900184E57 /* SchoolFood_OrderPageUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE067DEC28A4957900184E57 /* SchoolFood_OrderPageUITests.swift */; };
 		CE067DEF28A4957900184E57 /* SchoolFood_OrderPageUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE067DEE28A4957900184E57 /* SchoolFood_OrderPageUITestsLaunchTests.swift */; };
+		CE067DFC28A509E800184E57 /* MenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE067DFB28A509E800184E57 /* MenuTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		CE067DE828A4957900184E57 /* SchoolFood_OrderPageUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SchoolFood_OrderPageUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE067DEC28A4957900184E57 /* SchoolFood_OrderPageUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFood_OrderPageUITests.swift; sourceTree = "<group>"; };
 		CE067DEE28A4957900184E57 /* SchoolFood_OrderPageUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchoolFood_OrderPageUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CE067DFB28A509E800184E57 /* MenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				CE067DC828A4957700184E57 /* AppDelegate.swift */,
 				CE067DCA28A4957700184E57 /* SceneDelegate.swift */,
 				CE067DCC28A4957700184E57 /* ViewController.swift */,
+				CE067DFB28A509E800184E57 /* MenuTableViewCell.swift */,
 				CE067DD428A4957900184E57 /* Assets.xcassets */,
 				CE067DD628A4957900184E57 /* LaunchScreen.storyboard */,
 				CE067DD928A4957900184E57 /* Info.plist */,
@@ -261,6 +264,7 @@
 				CE067DC928A4957700184E57 /* AppDelegate.swift in Sources */,
 				CE067DCB28A4957700184E57 /* SceneDelegate.swift in Sources */,
 				CE067DD328A4957700184E57 /* SchoolFood_OrderPage.xcdatamodeld in Sources */,
+				CE067DFC28A509E800184E57 /* MenuTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
