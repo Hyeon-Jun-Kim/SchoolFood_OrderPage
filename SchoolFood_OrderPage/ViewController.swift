@@ -12,6 +12,12 @@ class ViewController: UIViewController {
     let navigationLogoImageView = UIImageView()
     let foodTableView = UITableView()
     let resetButton = UIButton(type: .system)
+    let walletLabel = UILabel()
+    let walletValueLabel = UILabel()
+    let priceLabel = UILabel()
+    let priceValueLabel = UILabel()
+    lazy var walletValue = 0
+    lazy var priceValue = 0
     
     let foodData = [["bibimbap","불맛 중화비빔밥","8500"],
                     ["jjolmyeon","어간장 육감쫄면","8000"],
@@ -27,9 +33,17 @@ class ViewController: UIViewController {
         
         view.addSubview(foodTableView)
         view.addSubview(resetButton)
+        view.addSubview(walletLabel)
+        view.addSubview(walletValueLabel)
+        view.addSubview(priceLabel)
+        view.addSubview(priceValueLabel)
         
         foodTableView.translatesAutoresizingMaskIntoConstraints = false
         resetButton.translatesAutoresizingMaskIntoConstraints = false
+        walletLabel.translatesAutoresizingMaskIntoConstraints = false
+        walletValueLabel.translatesAutoresizingMaskIntoConstraints = false
+        priceLabel.translatesAutoresizingMaskIntoConstraints = false
+        priceValueLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             foodTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
@@ -40,6 +54,7 @@ class ViewController: UIViewController {
             resetButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             resetButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             resetButton.heightAnchor.constraint(equalToConstant: 40)
+            
         ])
         
         foodTableView.separatorStyle = .none
@@ -50,6 +65,16 @@ class ViewController: UIViewController {
         resetButton.backgroundColor = .clear
         resetButton.setTitle("초기화", for: .normal)
         resetButton.setTitleColor(.red, for: .normal)
+        
+        walletLabel.text = "내 지갑"
+        walletLabel.textAlignment = .right
+        walletValueLabel.text = String(walletValue) + "원"
+        walletValueLabel.textAlignment = .right
+        
+        priceLabel.text = "최종 결제금액"
+        priceLabel.textAlignment = .right
+        priceValueLabel.text = String(priceValue) + "원"
+        priceValueLabel.textAlignment = .right
         
         super.viewDidLoad()
     }
