@@ -49,7 +49,7 @@ class MenuTableViewCell: UITableViewCell {
             
             foodCountLabel.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor),
             foodCountLabel.leadingAnchor.constraint(equalTo: foodNameLabel.trailingAnchor, constant: 5),
-            foodCountLabel.widthAnchor.constraint(equalToConstant: 30),
+            foodCountLabel.widthAnchor.constraint(equalToConstant: 40),
             
             stepper.centerYAnchor.constraint(equalTo: foodImageView.centerYAnchor),
             stepper.leadingAnchor.constraint(equalTo: foodCountLabel.trailingAnchor, constant: 20)
@@ -70,7 +70,6 @@ class MenuTableViewCell: UITableViewCell {
     
     @objc
     func didTapStepper(_ sender: UIStepper){
-        print(sender.value)
         foodCountLabel.text = String(Int(sender.value))+"개"
     }
 }

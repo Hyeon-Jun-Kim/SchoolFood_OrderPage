@@ -101,10 +101,11 @@
 		CE067DC728A4957700184E57 /* SchoolFood_OrderPage */ = {
 			isa = PBXGroup;
 			children = (
+				CE067DFD28AA0C5400184E57 /* Controllers */,
+				CE067DFF28AA0C7600184E57 /* Views */,
+				CE067DFE28AA0C6000184E57 /* Models */,
 				CE067DC828A4957700184E57 /* AppDelegate.swift */,
 				CE067DCA28A4957700184E57 /* SceneDelegate.swift */,
-				CE067DCC28A4957700184E57 /* ViewController.swift */,
-				CE067DFB28A509E800184E57 /* MenuTableViewCell.swift */,
 				CE067DD428A4957900184E57 /* Assets.xcassets */,
 				CE067DD628A4957900184E57 /* LaunchScreen.storyboard */,
 				CE067DD928A4957900184E57 /* Info.plist */,
@@ -128,6 +129,29 @@
 				CE067DEE28A4957900184E57 /* SchoolFood_OrderPageUITestsLaunchTests.swift */,
 			);
 			path = SchoolFood_OrderPageUITests;
+			sourceTree = "<group>";
+		};
+		CE067DFD28AA0C5400184E57 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CE067DCC28A4957700184E57 /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CE067DFE28AA0C6000184E57 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		CE067DFF28AA0C7600184E57 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				CE067DFB28A509E800184E57 /* MenuTableViewCell.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
