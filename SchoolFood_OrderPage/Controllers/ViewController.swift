@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     let resetButton = UIButton(type: .system)
     
     lazy var walletValue = 0
-    lazy var priceValue = 0
+    lazy var priceValue = 10000
     
     let foodData = [["bibimbap","불맛 중화비빔밥","8500"],
                     ["jjolmyeon","어간장 육감쫄면","8000"],
@@ -73,7 +73,7 @@ class ViewController: UIViewController {
         foodTableView.isScrollEnabled = false
         foodTableView.register(MenuTableViewCell.self, forCellReuseIdentifier: "Cell")
         foodTableView.dataSource = self
-//        foodTableView.delegate = self
+        foodTableView.delegate = self
         
         setLabels("내 지갑", walletLabel, String(walletValue) + "원", walletValueLabel)
         setLabels("최종 결제금액", priceLabel, String(priceValue) + "원", priceValueLabel)
@@ -103,8 +103,8 @@ class ViewController: UIViewController {
         walletValue = 0
         priceValue = 0
         
-        walletLabel.text = String(walletValue)+"원"
-        priceLabel.text = String(priceValue)+"원"
+        walletValueLabel.text = String(walletValue)+"원"
+        priceValueLabel.text = String(priceValue)+"원"
     }
     
     func setLabels(_ text1: String, _ label1: UILabel, _ text2: String, _ label2: UILabel){
@@ -134,22 +134,30 @@ class ViewController: UIViewController {
     func presntAlertController_Right(){
         
         let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default)
-        alertController.addAction(confirmAction)
         
         if priceValue == 0{
             alertController.title = "상품 없음"
             alertController.message = "먼저 상품을 추가하세요."
+            let confirmAction = UIAlertAction(title: "확인", style: .default)
+            alertController.addAction(confirmAction)
         }else if priceValue > walletValue{
             alertController.title = "잔액 부족"
             alertController.message = String(priceValue - walletValue)+"원이 부족합니다."
+            let confirmAction = UIAlertAction(title: "확인", style: .default)
+            alertController.addAction(confirmAction)
         }else {
             alertController.title = "결제"
-            alertController.message = String(walletValue - priceValue)+"원을 결제하시겠습니까?"
+            alertController.message = String(priceValue)+"원을 결제하시겠습니까?"
+            let confirmAction = UIAlertAction(title: "확인", style: .default){(_) in
+                self.walletValue = self.walletValue - self.priceValue
+                self.walletValueLabel.text = String(self.walletValue) + "원"
+                self.priceValue = 0
+                self.priceValueLabel.text = String(self.priceValue) + "원"
+            }
+            alertController.addAction(confirmAction)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
             alertController.addAction(cancelAction)
         }
-        
         present(alertController, animated: true)
     }
 }
@@ -168,6 +176,12 @@ extension ViewController: UITableViewDataSource{
         cell.selectionStyle = .none
         
         return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath)
     }
 }
 
