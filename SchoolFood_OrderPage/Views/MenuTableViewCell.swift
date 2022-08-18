@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol orderTableViewCellDelegate: AnyObject{
+    func didtapStepper(count: Int, tag: Int)
+}
+
 class MenuTableViewCell: UITableViewCell {
 
     let foodImageView = UIImageView()
@@ -14,6 +18,11 @@ class MenuTableViewCell: UITableViewCell {
     let foodPriceLabel = UILabel()
     let foodCountLabel = UILabel()
     let stepper = UIStepper()
+    
+    weak var delegate: orderTableViewCellDelegate?
+    var quantity = 0 {
+        willSet { foodCountLabel.text = "\(newValue)개" }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -70,6 +79,7 @@ class MenuTableViewCell: UITableViewCell {
     
     @objc
     func didTapStepper(_ sender: UIStepper){
-        foodCountLabel.text = String(Int(sender.value))+"개"
+        quantity = Int(sender.value)
+        delegate?.didtapStepper(count: quantity, tag: tag)
     }
 }

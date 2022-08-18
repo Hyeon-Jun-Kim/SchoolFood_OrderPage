@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class OrderViewController: UIViewController {
     
     let navigationLogoImageView = UIImageView()
     let foodTableView = UITableView()
@@ -18,13 +18,18 @@ class ViewController: UIViewController {
     let priceValueLabel = UILabel()
     let resetButton = UIButton(type: .system)
     
-    lazy var walletValue = 0
-    lazy var priceValue = 10000
-    
     let foodData = [["bibimbap","불맛 중화비빔밥","8500"],
                     ["jjolmyeon","어간장 육감쫄면","8000"],
                     ["specailmari","스페셜 마리","7500"],
                     ["tteokbokki","의성 마늘떡볶이","9000"]]
+    var cartData = [0, 0, 0, 0]
+    
+    var walletValue = 0 {
+        willSet { walletValueLabel.text = "\(numFormatter(String(newValue)))원" }
+    }
+    lazy var priceValue = 0{
+        willSet { priceValueLabel.text = "\(numFormatter(String(newValue)))원" }
+    }
     
     override func viewDidLoad() {
         
@@ -73,7 +78,6 @@ class ViewController: UIViewController {
         foodTableView.isScrollEnabled = false
         foodTableView.register(MenuTableViewCell.self, forCellReuseIdentifier: "Cell")
         foodTableView.dataSource = self
-        foodTableView.delegate = self
         
         setLabels("내 지갑", walletLabel, String(walletValue) + "원", walletValueLabel)
         setLabels("최종 결제금액", priceLabel, String(priceValue) + "원", priceValueLabel)
@@ -86,6 +90,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    // [Mark] Navigation Bar Button 이벤트 분기 함수
     @objc
     func didTapBarButtonItem(_ sender: UIBarButtonItem){
         switch sender{
@@ -98,15 +103,16 @@ class ViewController: UIViewController {
         }
     }
     
+    // [Mark] Reset Button 동작 함수
     @objc
     func didTapResetButton(_ sender: UIButton){
         walletValue = 0
         priceValue = 0
-        
-        walletValueLabel.text = String(walletValue)+"원"
-        priceValueLabel.text = String(priceValue)+"원"
+        cartData = [0, 0, 0, 0]
+        foodTableView.reloadData()
     }
     
+    // [Mark] 결제 관련 Labels 세팅 함수
     func setLabels(_ text1: String, _ label1: UILabel, _ text2: String, _ label2: UILabel){
         label1.text = text1
         label1.textAlignment = .right
@@ -117,22 +123,43 @@ class ViewController: UIViewController {
         label2.textAlignment = .right
     }
     
+    // [Mark] 금액에 쉼표 표시하는 함수
+    func numFormatter(_ num: String) -> String{
+        let numberFormatter = NumberFormatter()
+        numberFormatter.numberStyle = .decimal
+        
+        if !(isStringEmptyCheck(num)), let price = Int(num){
+            return numberFormatter.string(from: price as NSNumber)!
+        }
+        return ""
+    }
+     // [mark] String 값의 nil 여부 판단 함수
+    func isStringEmptyCheck(_ str: String?) -> Bool{
+        if str == nil{return true}
+        else{return false}
+    }
+    
+    // [Mark] Navigation Bar Left Button : 충전
     func presntAlertController_Left(){
         let alertController = UIAlertController(title: "지갑", message: "얼마를 충전할까요?", preferredStyle: .alert)
-        let confirmAction = UIAlertAction(title: "확인", style: .default) {(_) in
+        
+        let confirmAction = UIAlertAction(title: "확인", style: .default){(_) in
             let insertVal = alertController.textFields?[0].text
             self.walletValue += Int(insertVal!) ?? 0
-            self.walletValueLabel.text = String(self.walletValue)+"원"
         }
+        
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
         alertController.addAction(confirmAction)
         alertController.addAction(cancelAction)
-        alertController.addTextField()
+        alertController.addTextField{ textField in
+            textField.keyboardType = .numberPad
+        }
+        
         present(alertController, animated: true)
     }
     
+    // [Mark] Navigation Bar Right Button : 결제
     func presntAlertController_Right(){
-        
         let alertController = UIAlertController(title: "", message: "", preferredStyle: .alert)
         
         if priceValue == 0{
@@ -150,9 +177,9 @@ class ViewController: UIViewController {
             alertController.message = String(priceValue)+"원을 결제하시겠습니까?"
             let confirmAction = UIAlertAction(title: "확인", style: .default){(_) in
                 self.walletValue = self.walletValue - self.priceValue
-                self.walletValueLabel.text = String(self.walletValue) + "원"
                 self.priceValue = 0
-                self.priceValueLabel.text = String(self.priceValue) + "원"
+                self.cartData = [0, 0, 0, 0]
+                self.foodTableView.reloadData()
             }
             alertController.addAction(confirmAction)
             let cancelAction = UIAlertAction(title: "취소", style: .cancel)
@@ -162,7 +189,8 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDataSource{
+// [Mark] Table Data Sourse
+extension OrderViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return foodData.count
     }
@@ -172,16 +200,25 @@ extension ViewController: UITableViewDataSource{
                 as? MenuTableViewCell else{ fatalError() }
         cell.foodImageView.image = UIImage(named: foodData[indexPath.row][0])
         cell.foodNameLabel.text = foodData[indexPath.row][1]
-        cell.foodPriceLabel.text = foodData[indexPath.row][2] + "원"
+        cell.foodPriceLabel.text = self.numFormatter(foodData[indexPath.row][2]) + "원"
+        cell.foodCountLabel.text = numFormatter(String(cartData[indexPath.row]))
+        cell.tag = indexPath.row
         cell.selectionStyle = .none
-        
+        cell.delegate = self
         return cell
     }
 }
 
-extension ViewController: UITableViewDelegate{
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
+// [Mark] TableViewCell Delegate
+extension OrderViewController: orderTableViewCellDelegate{
+    func didtapStepper(count: Int, tag: Int) {
+        cartData[tag] = count
+        // 주문 음식 수의 총 가격을 계산 : 각 음식의 가격 * 카트에 담긴 수
+        priceValue = 0
+        for i in 0...3{
+            let foodPrice = Int(foodData[i][2]) ?? 0
+            priceValue += foodPrice * cartData[i]
+        }
     }
 }
 
